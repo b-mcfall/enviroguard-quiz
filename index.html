@@ -665,6 +665,7 @@
 const answers = {};
 let otFlow = false;
 let directMode = false;
+let sourceTag = '';  // Captured from ?src= URL parameter for channel attribution
 
 // ─── WEBHOOK ─────────────────────────────────────────────────────────────────
 // Paste your Make.com or Apps Script webhook URL here:
@@ -721,9 +722,17 @@ function goBackFromContact() {
   showScreen(otFlow ? 'screen-onetime-result' : 'screen-discount');
 }
 
-// ─── DIRECT MODE INIT ────────────────────────────────────────────────────────
+// ─── INIT: URL PARAMETERS ─────────────────────────────────────────────────────
 function initDirectMode() {
   const params = new URLSearchParams(window.location.search);
+
+  // Capture source tag for any URL — works for both quiz and direct mode
+  const src = params.get('src');
+  if (src) {
+    // Sanitize: max 30 chars, alphanumeric + dash/underscore only
+    sourceTag = src.replace(/[^a-zA-Z0-9_-]/g, '').substring(0, 30);
+  }
+
   if (params.get('direct') === '1') {
     directMode = true;
 
@@ -1058,7 +1067,8 @@ async function submitLead() {
     discounts:     labelArr(answers.discounts, DISCOUNT_LABELS),
     property_type: answers.q1 === 'home' ? 'Single-Family Home' : answers.q1 === 'condo' ? 'Townhouse/Condo' : answers.q1 === 'commercial' ? 'Commercial/Rental' : '—',
     direct_needs:  needs,
-    source:        directMode ? 'Direct Link' : 'Web Quiz'
+    source:        directMode ? 'Direct Link' : 'Web Quiz',
+    source_tag:    sourceTag || '—'
   };
 
   try {
