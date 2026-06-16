@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0e0e0e">
+<meta name="description" content="Answer 7 quick questions and get a custom pest control quote from EnviroGuard Pest Control in Orlando, FL.">
+<title>EnviroGuard – Get Your Free Pest Control Quote</title>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #4a8c2a;          /* button green from site */
+    --green-light: #5ca838;
+    --black: #14230d;          /* deep forest green — site background */
+    --black-deep: #0d1808;
+    --white: #f5f5f2;
+    --gray-light: #2a3d20;
+    --accent: #6cc24a;         /* logo "Enviro" green */
+    --text-muted: #8fa085;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--black); color:var(--white); font-family:'DM Sans',sans-serif; min-height:100vh; overflow-x:hidden; }
+  body::before { content:''; position:fixed; inset:0; background:radial-gradient(ellipse at 20% 50%,rgba(108,194,74,.06) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(108,194,74,.04) 0%,transparent 50%); pointer-events:none; z-index:0; }
+  .container { max-width:680px; margin:0 auto; padding:0 24px; position:relative; z-index:1; }
+  /* Brand header */
+  .header { padding:54px 0 22px; text-align:center; border-bottom:1px solid rgba(255,255,255,.07); margin-bottom:44px; }
+  .brand { display:inline-flex; flex-direction:column; align-items:center; gap:4px; }
+  .brand-mark { position:relative; display:inline-block; }
+  .brand-dragonfly { position:absolute; top:-46px; left:50%; transform:translateX(-44%); width:86px; height:45px; color:var(--white); }
+  .brand-word { font-family:'DM Sans',sans-serif; font-weight:300; font-size:26px; letter-spacing:2px; line-height:1; white-space:nowrap; }
+  .brand-word .ev { color:var(--accent); }
+  .brand-word .gd { color:var(--white); }
+  .brand-word .cap { font-size:34px; font-weight:400; }
+  .brand-sub { font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--text-muted); margin-top:6px; }
+
+  /* Screen */
+  .screen { display:none; animation:fadeUp .4s ease forwards; padding-bottom:48px; }
+  .screen.active { display:block; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  /* Progress */
+  .progress-wrap { margin-bottom:40px; }
+  .progress-label { display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); margin-bottom:8px; letter-spacing:1px; text-transform:uppercase; }
+  .progress-track { height:3px; background:var(--gray-light); border-radius:2px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--accent)); border-radius:2px; transition:width .5s cubic-bezier(.4,0,.2,1); }
+
+  /* Question text */
+  .q-eyebrow { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+  .q-title { font-family:'Russo One',sans-serif; font-size:clamp(21px,4.8vw,32px); line-height:1.15; margin-bottom:8px; letter-spacing:.5px; text-transform:uppercase; }
+  .q-sub { font-size:14px; color:var(--text-muted); margin-bottom:20px; line-height:1.6; }
+  .multi-note { font-size:12px; color:var(--text-muted); margin-bottom:16px; font-style:italic; }
+
+  /* Options */
+  .options { display:flex; flex-direction:column; gap:12px; }
+  .option { display:flex; align-items:center; gap:16px; padding:18px 20px; border:1px solid rgba(255,255,255,.08); border-radius:10px; background:rgba(255,255,255,.02); cursor:pointer; transition:all .2s ease; -webkit-tap-highlight-color:transparent; user-select:none; }
+  .option:hover { border-color:var(--green); background:rgba(74,140,42,.08); transform:translateX(4px); }
+  .option:active { transform:scale(.985); background:rgba(74,140,42,.14); border-color:var(--green); }
+  .option:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .option.selected { border-color:var(--accent); background:rgba(108,194,74,.08); }
+  .option-icon { font-size:24px; min-width:36px; text-align:center; }
+  .option-text strong { display:block; font-size:15px; font-weight:600; margin-bottom:2px; }
+  .option-text span { font-size:13px; color:var(--text-muted); }
+  .option input { display:none; }
+
+  /* Check indicator — circle for single, square for multi */
+  .check-dot { width:20px; height:20px; border-radius:50%; border:2px solid rgba(255,255,255,.2); margin-left:auto; flex-shrink:0; transition:all .2s; display:flex; align-items:center; justify-content:center; }
+  .multi-select .option .check-dot { border-radius:5px; }
+  .option.selected .check-dot { background:var(--accent); border-color:var(--accent); }
+  .option.selected .check-dot::after { content:'✓'; font-size:11px; color:var(--black); font-weight:800; }
+
+  /* Buttons */
+  .btn-next { margin-top:28px; width:100%; padding:18px; background:var(--green); color:white; border:none; border-radius:10px; font-family:'Russo One',sans-serif; font-size:15px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all .2s ease; -webkit-tap-highlight-color:transparent; }
+  .btn-next:hover { background:var(--green-light); transform:translateY(-1px); }
+  .btn-next:active { transform:scale(.98); }
+  .btn-next:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .btn-next:disabled { opacity:.3; cursor:not-allowed; transform:none; }
+  .btn-back { margin-top:8px; width:100%; padding:14px; background:transparent; color:var(--text-muted); border:1px solid rgba(255,255,255,.1); border-radius:10px; font-size:14px; cursor:pointer; transition:all .2s; }
+  .btn-back:hover { border-color:rgba(255,255,255,.2); color:var(--white); }
+  .btn-cta { width:100%; padding:20px; background:var(--green); color:white; border:none; border-radius:10px; font-family:'Russo One',sans-serif; font-size:16px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all .25s ease; margin-bottom:12px; }
+  .btn-cta:hover { background:var(--green-light); transform:translateY(-2px); box-shadow:0 12px 32px rgba(74,140,42,.3); }
+  .btn-retake { width:100%; padding:14px; background:transparent; color:var(--text-muted); border:1px solid rgba(255,255,255,.1); border-radius:10px; font-size:14px; cursor:pointer; transition:all .2s; }
+  .btn-retake:hover { border-color:rgba(255,255,255,.2); color:var(--white); }
+
+  /* Intro */
+  .intro-badge { display:inline-block; background:rgba(108,194,74,.12); border:1px solid rgba(108,194,74,.3); color:var(--accent); font-size:12px; letter-spacing:2px; text-transform:uppercase; padding:6px 14px; border-radius:20px; margin-bottom:24px; }
+  .intro-title { font-family:'Russo One',sans-serif; font-size:clamp(28px,7vw,50px); line-height:1.1; letter-spacing:.5px; margin-bottom:20px; text-transform:uppercase; }
+  .intro-title span { color:var(--accent); }
+  .intro-desc { font-size:16px; color:#aaa; line-height:1.7; margin-bottom:36px; }
+  .intro-stats { display:flex; gap:32px; margin-bottom:40px; }
+  .stat-num { font-family:'Russo One',sans-serif; font-size:24px; color:var(--accent); line-height:1.1; }
+  .stat-label { font-size:12px; color:var(--text-muted); letter-spacing:1px; }
+  .btn-start { width:100%; padding:20px 48px; background:var(--green); color:white; border:none; border-radius:10px; font-family:'Russo One',sans-serif; font-size:16px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition:all .25s ease; }
+  .btn-start:hover { background:var(--green-light); transform:translateY(-2px); box-shadow:0 12px 32px rgba(74,140,42,.3); }
+
+  /* Result */
+  .result-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(108,194,74,.1); border:1px solid rgba(108,194,74,.25); padding:8px 16px; border-radius:20px; font-size:12px; color:var(--accent); letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
+  .result-plan-name { font-family:'Russo One',sans-serif; font-size:clamp(30px,7.5vw,54px); line-height:1.1; letter-spacing:1px; margin-bottom:4px; }
+  .result-plan-name span { color:var(--accent); }
+  .result-tagline { font-size:15px; color:var(--text-muted); margin-bottom:32px; line-height:1.6; }
+  .result-card { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:28px; margin-bottom:24px; }
+  .price-row { display:flex; align-items:center; gap:16px; margin-bottom:12px; }
+  .price-col { flex:1; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:10px; padding:14px 16px; text-align:center; }
+  .price-label { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px; }
+  .price-big { font-family:'Russo One',sans-serif; font-size:28px; line-height:1.1; color:var(--accent); }
+  .price-mo { font-family:'DM Sans',sans-serif; font-size:14px; color:var(--text-muted); font-weight:400; }
+  .price-was { font-size:12px; color:var(--text-muted); text-decoration:line-through; margin-top:4px; }
+  .price-divider { font-family:'Russo One',sans-serif; font-size:18px; color:var(--text-muted); flex-shrink:0; }
+  .savings-bar { background:rgba(108,194,74,.08); border:1px solid rgba(108,194,74,.2); border-radius:8px; padding:10px 14px; font-size:13px; color:var(--accent); text-align:center; margin-bottom:10px; }
+  .discount-badge { display:none; background:rgba(108,194,74,.08); border:1px solid rgba(108,194,74,.2); border-radius:8px; padding:10px 14px; font-size:13px; color:var(--accent); text-align:center; margin-bottom:10px; }
+  .cancel-note { font-size:11px; color:var(--text-muted); background:rgba(255,255,255,.02); border-radius:6px; padding:10px 14px; line-height:1.6; border:1px solid rgba(255,255,255,.05); margin-bottom:16px; }
+  .feature-list { list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:12px; }
+  .feature-list li { display:flex; align-items:flex-start; gap:10px; font-size:14px; color:#ccc; line-height:1.5; }
+  .feature-list li::before { content:'✓'; color:var(--accent); font-weight:700; flex-shrink:0; margin-top:1px; }
+  .size-note { font-size:12px; color:var(--text-muted); margin-top:8px; line-height:1.6; }
+  .result-why { background:rgba(74,140,42,.08); border-left:3px solid var(--green); border-radius:0 8px 8px 0; padding:16px 20px; margin-bottom:24px; font-size:14px; color:#bbb; line-height:1.6; }
+  .result-why strong { color:var(--accent); display:block; margin-bottom:4px; font-size:13px; letter-spacing:1px; text-transform:uppercase; }
+
+  /* Contact form */
+  .form-steps { display:flex; gap:8px; margin-bottom:32px; }
+  .form-step { flex:1; text-align:center; padding:8px; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--text-muted); border-bottom:2px solid rgba(255,255,255,.08); transition:all .2s; }
+  .form-step.active { color:var(--accent); border-bottom-color:var(--accent); }
+  .fstep { display:none; }
+  .fstep.active { display:block; }
+  .form-row { display:flex; gap:12px; }
+  .form-row .form-group { flex:1; }
+  .form-group { margin-bottom:16px; }
+  .form-group label { display:block; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:8px; }
+  .form-group input { width:100%; padding:16px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:8px; color:var(--white); font-size:15px; font-family:'DM Sans',sans-serif; transition:border-color .2s; outline:none; }
+  .form-group input:focus { border-color:var(--green); }
+  .form-group input::placeholder { color:#555; }
+  .form-group input.error { border-color:#ff6b6b; }
+  /* Best time select — wrapped for chevron */
+  .select-wrap { position:relative; }
+  .select-wrap::after { content:'▾'; position:absolute; right:18px; top:50%; transform:translateY(-50%); color:var(--text-muted); pointer-events:none; font-size:14px; }
+  .form-group select { width:100%; padding:16px 44px 16px 16px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:8px; color:var(--white); font-size:15px; font-family:'DM Sans',sans-serif; transition:border-color .2s; outline:none; appearance:none; -webkit-appearance:none; cursor:pointer; }
+  .form-group select:focus { border-color:var(--green); }
+  .form-group select option { background:#1a1a1a; color:var(--white); }
+  .form-group input.error, .form-group select.error { border-color:#ff6b6b; background:rgba(255,107,107,.05); }
+  .field-error { display:none; font-size:12px; color:#ff6b6b; margin-top:6px; }
+  .field-error.show { display:block; }
+  .field-warning { display:none; font-size:12px; color:#ffb74d; margin-top:6px; }
+  .field-warning.show { display:block; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  }
+
+  /* Thank-you screen */
+  .ty-icon { font-size:64px; margin-bottom:20px; display:block; }
+  .ty-title { font-family:'Russo One',sans-serif; font-size:clamp(28px,6.5vw,44px); line-height:1.1; letter-spacing:.5px; margin-bottom:12px; text-transform:uppercase; }
+  .ty-title span { color:var(--accent); }
+  .ty-body { font-size:15px; color:#aaa; line-height:1.7; margin-bottom:32px; }
+  .ty-summary { background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:14px; padding:24px; margin-bottom:28px; }
+  .ty-summary-title { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:16px; }
+  .ty-row { display:flex; justify-content:space-between; align-items:flex-start; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.05); font-size:14px; gap:12px; }
+  .ty-row:last-child { border-bottom:none; }
+  .ty-label { color:var(--text-muted); flex-shrink:0; }
+  .ty-val { color:var(--white); text-align:right; }
+
+  /* Payment (kept for reference but hidden) */
+  #lead-status { text-align:center; font-size:13px; margin-top:12px; display:none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg class="brand-dragonfly" viewBox="0 0 1108 580" xmlns="http://www.w3.org/2000/svg"><!-- fat cigar wing -->
+  <path d="M812 505 C782 380, 790 165, 848 60 C892 165, 894 380, 850 508 Z" fill="currentColor"/>
+  <!-- wing A: long diagonal up-left -->
+  <path d="M762 478 L542 220" stroke="currentColor" stroke-width="48" stroke-linecap="round"/>
+  <!-- wing B: steeper, shorter -->
+  <path d="M783 468 L697 232" stroke="currentColor" stroke-width="46" stroke-linecap="round"/>
+  <!-- wing C: short shallow stub -->
+  <path d="M722 458 L603 398" stroke="currentColor" stroke-width="42" stroke-linecap="round"/>
+  <!-- junction: tight convergence wedge -->
+  <path d="M728 448 C765 440, 805 450, 832 478 C842 505, 842 535, 828 556 C806 558, 778 540, 757 512 C742 492, 731 468, 728 448 Z" fill="currentColor"/>
+  <!-- abdomen bottom hook -->
+  <path d="M802 478 L826 550" stroke="currentColor" stroke-width="50" stroke-linecap="round"/>
+  <!-- body/tail: tapered with knob -->
+  <path d="M775 488 L152 428 L152 446 L768 516 Z" fill="currentColor"/>
+  <circle cx="153" cy="437" r="12" fill="currentColor"/>
+  <!-- detached comma dot -->
+  <path d="M876 520 C898 514, 916 530, 916 550 C916 566, 900 574, 886 564 C872 554, 864 530, 876 520 Z" fill="currentColor"/></svg>
+        <div class="brand-word"><span class="ev"><span class="cap">E</span>NVIRO</span><span class="gd"><span class="cap">G</span>UARD</span></div>
+      </div>
+      <div class="brand-sub">Pest Control · Orlando</div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="screen active" id="screen-intro">
+    <div class="intro-badge">🛡️ Free Protection Assessment</div>
+    <h1 class="intro-title">What's Bugging<br><span>Your Home?</span></h1>
+    <p class="intro-desc">Answer 7 quick questions and our team will build you a custom quote based on your exact situation — no guessing, no overselling.</p>
+    <div class="intro-stats">
+      <div><div class="stat-num">2 min</div><div class="stat-label">To complete</div></div>
+      <div><div class="stat-num">7</div><div class="stat-label">Questions</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-label">Free</div></div>
+    </div>
+    <button class="btn-start" onclick="showScreen('screen-1')">Start My Free Quote →</button>
+  </div>
+
+  <!-- Q1: Property Type -->
+  <div class="screen" id="screen-1">
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Question 1 of 7</span><span>14%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:14%"></div></div>
+    </div>
+    <div class="q-eyebrow">Your Situation</div>
+    <h2 class="q-title">What type of property do you need protected?</h2>
+    <p class="q-sub">This helps us tailor treatment zones and frequency.</p>
+    <div class="options" id="opts-1">
+      <div class="option" data-value="home" onclick="selectSingle(this,'q1','next-1')">
+        <span class="option-icon">🏠</span>
+        <div class="option-text"><strong>Single-family home</strong><span>House with a yard</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="condo" onclick="selectSingle(this,'q1','next-1')">
+        <span class="option-icon">🏢</span>
+        <div class="option-text"><strong>Townhouse or condo</strong><span>Shared walls or complex</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="commercial" onclick="selectSingle(this,'q1','next-1')">
+        <span class="option-icon">🏬</span>
+        <div class="option-text"><strong>Commercial / rental property</strong><span>Business or investment property</span></div>
+        <div class="check-dot"></div>
+      </div>
+    </div>
+    <button class="btn-next" id="next-1" disabled onclick="showScreen('screen-type')">Next →</button>
+    <button class="btn-back" onclick="showScreen('screen-intro')">← Back</button>
+  </div>
+
+  <!-- SERVICE TYPE FORK -->
+  <div class="screen" id="screen-type">
+    <div class="progress-wrap">
+      <div class="progress-label"><span>One Quick Question</span><span></span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:14%"></div></div>
+    </div>
+    <div class="q-eyebrow">Service Type</div>
+    <h2 class="q-title">What are you looking for?</h2>
+    <p class="q-sub">We offer both ongoing protection plans and one-time treatments.</p>
+    <div class="options" id="opts-type">
+      <div class="option" data-value="recurring" onclick="selectServiceType(this)">
+        <span class="option-icon">🔄</span>
+        <div class="option-text"><strong>Ongoing protection plan</strong><span>Regular treatments to keep pests away year-round</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="onetime" onclick="selectServiceType(this)">
+        <span class="option-icon">🎯</span>
+        <div class="option-text"><strong>One-time treatment</strong><span>I have a specific problem I need handled</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="unsure" onclick="selectServiceType(this)">
+        <span class="option-icon">🤔</span>
+        <div class="option-text"><strong>Not sure yet</strong><span>Help me figure out what I need</span></div>
+        <div class="check-dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ONE-TIME SERVICE SELECTION -->
+  <div class="screen" id="screen-onetime">
+    <div class="q-eyebrow">One-Time Services</div>
+    <h2 class="q-title">What do you need treated?</h2>
+    <p class="q-sub">Select your pest and we'll show you exactly what's included and the price.</p>
+    <div class="options" id="opts-onetime">
+      <div class="option" data-value="grt" onclick="selectOneTime(this)">
+        <span class="option-icon">🪳</span>
+        <div class="option-text"><strong>German Roach Treatment (GRT)</strong><span>$350–$650 · 4–5 treatments · 30-day guarantee</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="flea" onclick="selectOneTime(this)">
+        <span class="option-icon">🐾</span>
+        <div class="option-text"><strong>Fleas</strong><span>$350 · 2 treatments 7–14 days apart · 30-day guarantee</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="mosquito_trap" onclick="selectOneTime(this)">
+        <span class="option-icon">🦟</span>
+        <div class="option-text"><strong>Mosquito Traps</strong><span>$20/month · 2 traps · Monthly refill · 80% reduction</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="moles" onclick="selectOneTime(this)">
+        <span class="option-icon">🐀</span>
+        <div class="option-text"><strong>Moles &amp; Voles</strong><span>$450 · 3 consecutive daily treatments · 15-day guarantee</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="bedbug" onclick="selectOneTime(this)">
+        <span class="option-icon">🛏️</span>
+        <div class="option-text"><strong>Bed Bugs</strong><span>$3,000–$3,500 · 4–5 treatments · 30-day guarantee</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="yellowjacket" onclick="selectOneTime(this)">
+        <span class="option-icon">🐝</span>
+        <div class="option-text"><strong>Yellow Jackets</strong><span>$450 · 1 treatment · Nest removal</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="termite" onclick="selectOneTime(this)">
+        <span class="option-icon">🪵</span>
+        <div class="option-text"><strong>Termites</strong><span>$1,600–$2,700 · 1-year renewal · Interior inspection required</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="rodent" onclick="selectOneTime(this)">
+        <span class="option-icon">🐭</span>
+        <div class="option-text"><strong>Rats / Mice</strong><span>$60 rodent box (outside only) · Follow-up in 4–5 days</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="bees" onclick="selectOneTime(this)">
+        <span class="option-icon">🍯</span>
+        <div class="option-text"><strong>Bees</strong><span>$2,500 · 1 treatment · 3 beekeeper denials required first</span></div>
+        <div class="check-dot"></div>
+      </div>
+    </div>
+    <button class="btn-next" id="next-onetime" disabled onclick="goToDiscount(true)">Next →</button>
+    <button class="btn-back" onclick="showScreen('screen-type')">← Back</button>
+  </div>
+
+  <!-- ONE-TIME RESULT -->
+  <div class="screen" id="screen-onetime-result">
+    <div class="result-badge">✅ Recommended Service</div>
+    <h2 class="result-plan-name" id="ot-name">SERVICE <span>QUOTE</span></h2>
+    <div class="result-card">
+      <div class="price-label" style="margin-bottom:8px;">Starting Price Estimate</div>
+      <div class="price-big" id="ot-price" style="font-size:42px;margin-bottom:16px;">—</div>
+      <ul class="feature-list" id="ot-features"></ul>
+    </div>
+    <div class="discount-badge" id="ot-discount-badge"></div>
+    <div class="result-why">
+      <strong>Good to know</strong>
+      <span id="ot-note"></span>
+    </div>
+    <button class="btn-cta" onclick="goToContact()">Request My Quote →</button>
+    <button class="btn-back" onclick="showScreen('screen-discount')">← Back</button>
+    <button class="btn-retake" onclick="resetQuiz()">Start Over</button>
+  </div>
+
+  <!-- Q2: Pests -->
+  <div class="screen" id="screen-2">
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Question 2 of 7</span><span>29%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:29%"></div></div>
+    </div>
+    <div class="q-eyebrow">Active Problems</div>
+    <h2 class="q-title">What pests are you currently dealing with?</h2>
+    <p class="multi-note">Select all that apply.</p>
+    <div class="options multi-select" id="opts-2">
+      <div class="option" data-value="german_roach" onclick="selectMulti(this,'q2','next-2')">
+        <span class="option-icon">🪳</span>
+        <div class="option-text"><strong>German Roaches</strong><span>Small roaches in kitchen, bathroom, or appliances</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="mosquito" onclick="selectMulti(this,'q2','next-2')">
+        <span class="option-icon">🦟</span>
+        <div class="option-text"><strong>Mosquitoes</strong><span>Especially near water, lakes, or outdoor areas</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="rodent" onclick="selectMulti(this,'q2','next-2')">
+        <span class="option-icon">🐭</span>
+        <div class="option-text"><strong>Rodents (Rats / Mice)</strong><span>Droppings, chewing, or sightings</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="general" onclick="selectMulti(this,'q2','next-2')">
+        <span class="option-icon">🐜</span>
+        <div class="option-text"><strong>Ants, spiders, or general bugs</strong><span>Common household pests</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="flea" onclick="selectMulti(this,'q2','next-2')">
+        <span class="option-icon">🪲</span>
+        <div class="option-text"><strong>Fleas or ticks</strong><span>Often brought in by pets</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="prevention" onclick="selectMulti(this,'q2','next-2')">
+        <span class="option-icon">🛡️</span>
+        <div class="option-text"><strong>Not sure / just want prevention</strong><span>No active problem, want protection</span></div>
+        <div class="check-dot"></div>
+      </div>
+    </div>
+    <button class="btn-next" id="next-2" disabled onclick="showScreen('screen-3')">Next →</button>
+    <button class="btn-back" onclick="showScreen('screen-type')">← Back</button>
+  </div>
+
+  <!-- Q3: Pets -->
+  <div class="screen" id="screen-3">
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Question 3 of 7</span><span>43%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:43%"></div></div>
+    </div>
+    <div class="q-eyebrow">Your Household</div>
+    <h2 class="q-title">Do you have pets at home?</h2>
+    <p class="multi-note">Select all that apply.</p>
+    <div class="options multi-select" id="opts-3">
+      <div class="option" data-value="pets_dogs_cats" onclick="selectMultiExclusive(this,'q3','next-3','no_pets')">
+        <span class="option-icon">🐶</span>
+        <div class="option-text"><strong>Dogs and/or cats</strong><span>Indoor or outdoor</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="pets_other" onclick="selectMultiExclusive(this,'q3','next-3','no_pets')">
+        <span class="option-icon">🐠</span>
+        <div class="option-text"><strong>Birds, reptiles, or fish</strong><span>Sensitive to airborne treatments</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="no_pets" onclick="selectMultiExclusive(this,'q3','next-3','no_pets')">
+        <span class="option-icon">🚫</span>
+        <div class="option-text"><strong>No pets</strong><span></span></div>
+        <div class="check-dot"></div>
+      </div>
+    </div>
+    <button class="btn-next" id="next-3" disabled onclick="showScreen('screen-5')">Next →</button>
+    <button class="btn-back" onclick="showScreen('screen-2')">← Back</button>
+  </div>
+
+  <!-- Q4 (formerly Q5): Urgency -->
+  <div class="screen" id="screen-5">
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Question 4 of 7</span><span>57%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:57%"></div></div>
+    </div>
+    <div class="q-eyebrow">Situation</div>
+    <h2 class="q-title">How would you describe your pest situation?</h2>
+    <p class="q-sub">This tells us the urgency level and treatment approach you need.</p>
+    <div class="options" id="opts-5">
+      <div class="option" data-value="active" onclick="selectSingle(this,'q5','next-5')">
+        <span class="option-icon">🔥</span>
+        <div class="option-text"><strong>Active infestation — it's bad right now</strong><span>I need help immediately</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="occasional" onclick="selectSingle(this,'q5','next-5')">
+        <span class="option-icon">👀</span>
+        <div class="option-text"><strong>I'm seeing occasional pests</strong><span>A few here and there, getting worse</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="preventive" onclick="selectSingle(this,'q5','next-5')">
+        <span class="option-icon">🛡️</span>
+        <div class="option-text"><strong>I want to prevent problems before they start</strong><span>No current issue, just being proactive</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="tried_others" onclick="selectSingle(this,'q5','next-5')">
+        <span class="option-icon">😤</span>
+        <div class="option-text"><strong>I've tried other companies and it didn't work</strong><span>Looking for something that actually solves it</span></div>
+        <div class="check-dot"></div>
+      </div>
+    </div>
+    <button class="btn-next" id="next-5" disabled onclick="showScreen('screen-6')">Next →</button>
+    <button class="btn-back" onclick="showScreen('screen-3')">← Back</button>
+  </div>
+
+  <!-- Q6: Priorities -->
+  <div class="screen" id="screen-6">
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Question 5 of 7</span><span>71%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:71%"></div></div>
+    </div>
+    <div class="q-eyebrow">Your Priorities</div>
+    <h2 class="q-title">What matters most to you in a pest plan?</h2>
+    <p class="multi-note">Select all that apply.</p>
+    <div class="options multi-select" id="opts-6">
+      <div class="option" data-value="value" onclick="selectMulti(this,'q6','next-6')">
+        <span class="option-icon">💰</span>
+        <div class="option-text"><strong>Best value for the price</strong><span>Good coverage without overpaying</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="comprehensive" onclick="selectMulti(this,'q6','next-6')">
+        <span class="option-icon">🏆</span>
+        <div class="option-text"><strong>Most comprehensive coverage</strong><span>I want everything handled</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="fast" onclick="selectMulti(this,'q6','next-6')">
+        <span class="option-icon">⚡</span>
+        <div class="option-text"><strong>Fast results and follow-ups</strong><span>I want this solved quickly</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="flexible" onclick="selectMulti(this,'q6','next-6')">
+        <span class="option-icon">📅</span>
+        <div class="option-text"><strong>Flexible scheduling and easy communication</strong><span>I want a company that's easy to work with</span></div>
+        <div class="check-dot"></div>
+      </div>
+    </div>
+    <button class="btn-next" id="next-6" disabled onclick="showScreen('screen-7')">Next →</button>
+    <button class="btn-back" onclick="showScreen('screen-5')">← Back</button>
+  </div>
+
+  <!-- Q7: Home Size -->
+  <div class="screen" id="screen-7">
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Question 6 of 7</span><span>86%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:86%"></div></div>
+    </div>
+    <div class="q-eyebrow">Property Size</div>
+    <h2 class="q-title">How would you describe your home?</h2>
+    <p class="q-sub">Larger homes require more product and time — this helps us price accurately.</p>
+    <div class="options" id="opts-7">
+      <div class="option" data-value="small" onclick="selectSingle(this,'q7','next-7')">
+        <span class="option-icon">🏠</span>
+        <div class="option-text"><strong>Under 1,500 sq ft</strong><span>Small home or condo</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="medium" onclick="selectSingle(this,'q7','next-7')">
+        <span class="option-icon">🏡</span>
+        <div class="option-text"><strong>1,500 – 2,500 sq ft</strong><span>Average single-family home</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="large" onclick="selectSingle(this,'q7','next-7')">
+        <span class="option-icon">🏘️</span>
+        <div class="option-text"><strong>2,500 – 4,000 sq ft</strong><span>Larger home</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="xlarge" onclick="selectSingle(this,'q7','next-7')">
+        <span class="option-icon">🏰</span>
+        <div class="option-text"><strong>Over 4,000 sq ft</strong><span>Large or luxury property</span></div>
+        <div class="check-dot"></div>
+      </div>
+    </div>
+    <button class="btn-next" id="next-7" disabled onclick="showScreen('screen-8')">Next →</button>
+    <button class="btn-back" onclick="showScreen('screen-6')">← Back</button>
+  </div>
+
+  <!-- Q8: Yard Size -->
+  <div class="screen" id="screen-8">
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Question 7 of 7</span><span>100%</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+    </div>
+    <div class="q-eyebrow">Yard Size</div>
+    <h2 class="q-title">How would you describe your yard?</h2>
+    <p class="q-sub">Outdoor treatment coverage depends on how much ground we need to cover.</p>
+    <div class="options" id="opts-8">
+      <div class="option" data-value="no_yard" onclick="selectSingle(this,'q8','next-8')">
+        <span class="option-icon">🏢</span>
+        <div class="option-text"><strong>No yard</strong><span>Condo, apartment, or paved lot</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="small_yard" onclick="selectSingle(this,'q8','next-8')">
+        <span class="option-icon">🌱</span>
+        <div class="option-text"><strong>Small yard</strong><span>Under 5,000 sq ft lot</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="medium_yard" onclick="selectSingle(this,'q8','next-8')">
+        <span class="option-icon">🌿</span>
+        <div class="option-text"><strong>Medium yard</strong><span>5,000 – 10,000 sq ft lot</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="large_yard" onclick="selectSingle(this,'q8','next-8')">
+        <span class="option-icon">🌳</span>
+        <div class="option-text"><strong>Large yard</strong><span>Over 10,000 sq ft lot</span></div>
+        <div class="check-dot"></div>
+      </div>
+    </div>
+    <button class="btn-next" id="next-8" disabled onclick="goToDiscount(false)">Next →</button>
+    <button class="btn-back" onclick="showScreen('screen-7')">← Back</button>
+  </div>
+
+  <!-- DISCOUNT -->
+  <div class="screen" id="screen-discount">
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Almost Done 🎉</span><span></span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:100%"></div></div>
+    </div>
+    <div class="q-eyebrow">Special Discounts</div>
+    <h2 class="q-title">Do you qualify for a discount?</h2>
+    <p class="q-sub">We offer special rates for the people who serve our community.</p>
+    <p class="multi-note">Select all that apply.</p>
+    <div class="options multi-select" id="opts-discount">
+      <div class="option" data-value="military" onclick="selectDiscount(this)">
+        <span class="option-icon">🎖️</span>
+        <div class="option-text"><strong>Military / Veteran</strong><span>Active duty or honorably discharged</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="first_responder" onclick="selectDiscount(this)">
+        <span class="option-icon">🚒</span>
+        <div class="option-text"><strong>First Responder</strong><span>Fire, Police, or EMS</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="healthcare" onclick="selectDiscount(this)">
+        <span class="option-icon">👩‍⚕️</span>
+        <div class="option-text"><strong>Healthcare Worker</strong><span>Nurses, doctors, hospital staff</span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="senior" onclick="selectDiscount(this)">
+        <span class="option-icon">⭐</span>
+        <div class="option-text"><strong>Senior (65+)</strong><span></span></div>
+        <div class="check-dot"></div>
+      </div>
+      <div class="option" data-value="none" onclick="selectDiscount(this)">
+        <span class="option-icon">🚫</span>
+        <div class="option-text"><strong>None of the above</strong><span></span></div>
+        <div class="check-dot"></div>
+      </div>
+    </div>
+    <button class="btn-next" id="next-discount" disabled onclick="handleDiscountNext()">Next →</button>
+    <button class="btn-back" onclick="goBackFromDiscount()">← Back</button>
+  </div>
+
+
+  <!-- LEAD CAPTURE FORM -->
+  <div class="screen" id="screen-contact">
+    <div class="form-steps">
+      <div class="form-step active" id="fstep-1-tab">1 · Your Info</div>
+      <div class="form-step" id="fstep-2-tab">2 · Your Address</div>
+    </div>
+
+    <!-- Step 1: Personal Info -->
+    <div class="fstep active" id="fstep-1">
+      <div class="q-eyebrow">Almost There</div>
+      <h2 class="q-title">Who should we reach out to?</h2>
+      <p class="q-sub">A member of our team will contact you with a custom quote — no commitment required.</p>
+      <div class="form-row">
+        <div class="form-group"><label>First Name *</label><input type="text" id="inp-fname" placeholder="First name" autocomplete="given-name"><div class="field-error" id="err-fname">Please enter a valid first name.</div></div>
+        <div class="form-group"><label>Last Name *</label><input type="text" id="inp-lname" placeholder="Last name" autocomplete="family-name"><div class="field-error" id="err-lname">Please enter a valid last name.</div></div>
+      </div>
+      <div class="form-group"><label>Email Address *</label><input type="email" id="inp-email" placeholder="you@email.com" autocomplete="email" inputmode="email"><div class="field-error" id="err-email">Please enter a valid email address.</div></div>
+      <div class="form-group"><label>Phone Number *</label><input type="tel" id="inp-phone" placeholder="(407) 000-0000" autocomplete="tel" inputmode="tel" maxlength="14" oninput="formatPhone(this)"><div class="field-error" id="err-phone">Please enter a valid 10-digit phone number.</div></div>
+      <div class="form-group" id="grp-needs" style="display:none;">
+        <label>What do you need help with? <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
+        <input type="text" id="inp-needs" placeholder="e.g. roaches in kitchen, monthly service, rats in attic">
+      </div>
+      <div class="form-group">
+        <label>Best Time to Visit Your Home</label>
+        <div class="select-wrap">
+          <select id="inp-besttime">
+            <option value="" disabled selected>Select a time window</option>
+            <option value="Morning (8am–12pm)">Morning (8am–12pm)</option>
+            <option value="Midday (12pm–3pm)">Midday (12pm–3pm)</option>
+            <option value="Afternoon (3pm–6pm)">Afternoon (3pm–6pm)</option>
+            <option value="Flexible / Anytime">Flexible / Anytime</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-next" onclick="validateLeadStep1()">Next: Address →</button>
+      <button class="btn-back" onclick="goBackFromContact()">← Back</button>
+    </div>
+
+    <!-- Step 2: Address -->
+    <div class="fstep" id="fstep-2">
+      <div class="q-eyebrow">Service Location</div>
+      <h2 class="q-title">Where's the property?</h2>
+      <p class="q-sub">This helps us route the right technician to your area.</p>
+      <div class="form-group"><label>Street Address *</label><input type="text" id="inp-street" placeholder="123 Main St" autocomplete="street-address"><div class="field-error" id="err-street">Please include a street number (e.g. "123 Main St").</div></div>
+      <div class="form-row">
+        <div class="form-group" style="flex:2"><label>City *</label><input type="text" id="inp-city" placeholder="Orlando" autocomplete="address-level2"></div>
+        <div class="form-group" style="flex:1"><label>State *</label><input type="text" id="inp-state" placeholder="FL" maxlength="2" autocomplete="address-level1" style="text-transform:uppercase" value="FL"></div>
+        <div class="form-group" style="flex:1"><label>ZIP *</label><input type="text" id="inp-zip" placeholder="32801" maxlength="5" inputmode="numeric" pattern="[0-9]*" autocomplete="postal-code"></div>
+      </div>
+      <div class="field-error" id="err-zip" style="margin-top:-12px;margin-bottom:8px;">Please enter a valid 5-digit ZIP code.</div>
+      <div class="field-warning" id="warn-zip" style="margin-top:-12px;margin-bottom:8px;">⚠ This ZIP looks like it may be outside our Orlando service area — you can still submit, but please confirm.</div>
+      <button class="btn-next" id="btn-submit-lead" onclick="submitLead()">Get My Free Quote →</button>
+      <p id="lead-status"></p>
+      <button class="btn-back" onclick="goToFStep(1)">← Back</button>
+    </div>
+  </div>
+
+  <!-- THANK YOU -->
+  <div class="screen" id="screen-thankyou">
+    <span class="ty-icon">✅</span>
+    <h2 class="ty-title">We'll Be In<br><span>Touch Soon</span></h2>
+    <p class="ty-body">Thanks for completing the assessment! One of our team members will review your info and reach out with a custom quote — usually within a few hours during business hours.</p>
+    <div class="ty-summary" id="ty-summary"></div>
+    <button class="btn-retake" onclick="resetQuiz()">Start a New Assessment</button>
+  </div>
+
+</div><!-- end container -->
+
+<script>
+// ─── STATE ────────────────────────────────────────────────────────────────────
+const answers = {};
+let otFlow = false;
+let directMode = false;
+
+// ─── WEBHOOK ─────────────────────────────────────────────────────────────────
+// Paste your Make.com or Apps Script webhook URL here:
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyV_jn2tZRoQUdtIXJgeZb7gbsO4mwzlvtXiSQonGL2eq9YpXRo0cgo143Cc_BeyVDnYg/exec';
+
+// ─── LABEL MAPS (for readable lead sheet) ────────────────────────────────────
+const PEST_LABELS    = { german_roach:'German Roaches', mosquito:'Mosquitoes', rodent:'Rodents', general:'Ants/Spiders/General', flea:'Fleas or Ticks', prevention:'Prevention Only' };
+const PET_LABELS     = { pets_dogs_cats:'Dogs/Cats', pets_other:'Birds/Reptiles/Fish', no_pets:'No Pets' };
+const URGENCY_LABELS = { active:'Active Infestation', occasional:'Occasional Sightings', preventive:'Preventive', tried_others:'Tried Other Companies' };
+const PRIORITY_LABELS= { value:'Best Value', comprehensive:'Most Comprehensive', fast:'Fast Results', flexible:'Flexible Scheduling' };
+const HOME_LABELS    = { small:'Under 1,500 sq ft', medium:'1,500–2,500 sq ft', large:'2,500–4,000 sq ft', xlarge:'Over 4,000 sq ft' };
+const YARD_LABELS    = { no_yard:'No Yard', small_yard:'Small Yard', medium_yard:'Medium Yard', large_yard:'Large Yard' };
+const DISCOUNT_LABELS= { military:'Military/Veteran', first_responder:'First Responder', healthcare:'Healthcare Worker', senior:'Senior (65+)', none:'None' };
+const OT_LABELS      = { grt:'German Roach Treatment', flea:'Fleas', mosquito_trap:'Mosquito Traps', moles:'Moles & Voles', bedbug:'Bed Bugs', yellowjacket:'Yellow Jackets', termite:'Termites', rodent:'Rats/Mice', bees:'Bees' };
+const SVCTYPE_LABELS = { recurring:'Ongoing Protection Plan', onetime:'One-Time Treatment', unsure:'Not Sure Yet' };
+
+function labelArr(arr, map) {
+  if (!arr || arr.length === 0) return '—';
+  return [].concat(arr).map(v => map[v] || v).join(', ');
+}
+
+// ─── NAVIGATION ───────────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const t = document.getElementById(id);
+  if (t) t.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goToFStep(n) {
+  document.querySelectorAll('.fstep').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('fstep-' + n).classList.add('active');
+  document.getElementById('fstep-' + n + '-tab').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goToContact() {
+  showScreen('screen-contact');
+  goToFStep(1);
+}
+
+function goToDiscount(isOneTime) {
+  otFlow = !!isOneTime;
+  showScreen('screen-discount');
+}
+
+function goBackFromDiscount() {
+  showScreen(otFlow ? 'screen-onetime' : 'screen-8');
+}
+
+function goBackFromContact() {
+  if (directMode) return; // No back from direct mode entry
+  showScreen(otFlow ? 'screen-onetime-result' : 'screen-discount');
+}
+
+// ─── DIRECT MODE INIT ────────────────────────────────────────────────────────
+function initDirectMode() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('direct') === '1') {
+    directMode = true;
+
+    // Swap the lead form copy so it stands alone (no quiz context)
+    const tab1 = document.getElementById('fstep-1-tab');
+    const tab2 = document.getElementById('fstep-2-tab');
+    if (tab1) tab1.textContent = '1 · Your Info';
+    if (tab2) tab2.textContent = '2 · Your Address';
+
+    const eyebrow = document.querySelector('#fstep-1 .q-eyebrow');
+    const title   = document.querySelector('#fstep-1 .q-title');
+    const sub     = document.querySelector('#fstep-1 .q-sub');
+    if (eyebrow) eyebrow.textContent = 'Free Quote Request';
+    if (title)   title.textContent = 'Get Your Free Quote';
+    if (sub)     sub.textContent = 'Fill out a few quick details and our team will reach out with a custom quote — no commitment required.';
+
+    // Show the optional "what do you need" field
+    const needsGrp = document.getElementById('grp-needs');
+    if (needsGrp) needsGrp.style.display = 'block';
+
+    // Hide the back button on step 2 (no quiz to go back to from step 1)
+    // Hide the BACK button from step 1 of lead form — there's nothing behind it
+    document.querySelectorAll('#fstep-1 .btn-back').forEach(b => b.style.display = 'none');
+
+    // Jump straight to the lead form
+    showScreen('screen-contact');
+    goToFStep(1);
+  }
+}
+
+function handleDiscountNext() {
+  if (otFlow) {
+    renderOneTimeResult();
+    showScreen('screen-onetime-result');
+  } else {
+    goToContact();
+  }
+}
+
+function resetQuiz() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  otFlow = false;
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('.btn-next[id^="next-"]').forEach(b => b.disabled = true);
+  ['inp-fname','inp-lname','inp-email','inp-phone','inp-street','inp-city','inp-zip','inp-needs'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ''; el.classList.remove('error'); }
+  });
+  const stateEl = document.getElementById('inp-state');
+  if (stateEl) { stateEl.value = 'FL'; stateEl.classList.remove('error'); }
+  const bt = document.getElementById('inp-besttime');
+  if (bt) bt.selectedIndex = 0;
+  document.querySelectorAll('.field-error').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('.field-warning').forEach(e => { e.classList.remove('show'); delete e.dataset.acknowledged; });
+  const submitBtn = document.getElementById('btn-submit-lead');
+  if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Get My Free Quote →'; }
+  goToFStep(1);
+  // In direct mode, go back to the lead form for another submission; otherwise back to intro
+  if (directMode) {
+    showScreen('screen-contact');
+  } else {
+    showScreen('screen-intro');
+  }
+}
+
+// ─── SELECTION HANDLERS ───────────────────────────────────────────────────────
+function selectSingle(el, key, btnId) {
+  el.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[key] = el.dataset.value;
+  const btn = document.getElementById(btnId);
+  if (btn) btn.disabled = false;
+}
+
+function selectMulti(el, key, btnId) {
+  el.classList.toggle('selected');
+  const vals = [];
+  el.parentElement.querySelectorAll('.option.selected').forEach(o => vals.push(o.dataset.value));
+  answers[key] = vals;
+  const btn = document.getElementById(btnId);
+  if (btn) btn.disabled = vals.length === 0;
+}
+
+function selectMultiExclusive(el, key, btnId, exclusiveVal) {
+  const container = el.parentElement;
+  const val = el.dataset.value;
+  if (val === exclusiveVal) {
+    container.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  } else {
+    container.querySelectorAll('[data-value="' + exclusiveVal + '"]').forEach(o => o.classList.remove('selected'));
+    el.classList.toggle('selected');
+  }
+  const vals = [];
+  container.querySelectorAll('.option.selected').forEach(o => vals.push(o.dataset.value));
+  answers[key] = vals;
+  const btn = document.getElementById(btnId);
+  if (btn) btn.disabled = vals.length === 0;
+}
+
+function selectServiceType(el) {
+  document.querySelectorAll('#opts-type .option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers.serviceType = el.dataset.value;
+  setTimeout(() => {
+    showScreen(el.dataset.value === 'onetime' ? 'screen-onetime' : 'screen-2');
+  }, 280);
+}
+
+function selectOneTime(el) {
+  document.querySelectorAll('#opts-onetime .option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers.oneTimeService = el.dataset.value;
+  const btn = document.getElementById('next-onetime');
+  if (btn) btn.disabled = false;
+}
+
+function selectDiscount(el) {
+  const val = el.dataset.value;
+  const container = el.parentElement;
+  if (val === 'none') {
+    container.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    answers.discounts = ['none'];
+  } else {
+    container.querySelectorAll('[data-value="none"]').forEach(o => o.classList.remove('selected'));
+    el.classList.toggle('selected');
+    const vals = [];
+    container.querySelectorAll('.option.selected').forEach(o => vals.push(o.dataset.value));
+    answers.discounts = vals;
+  }
+  const btn = document.getElementById('next-discount');
+  if (btn) btn.disabled = (answers.discounts || []).length === 0;
+}
+
+// ─── ONE-TIME RESULT ──────────────────────────────────────────────────────────
+const ONE_TIME_DATA = {
+  grt:           { name:'GERMAN ROACH', sub:'GRT TREATMENT', price:'$350–$650', isRange:true, features:['4–5 treatments total','Targets German roaches in kitchen, bath, and appliances','30-day guarantee','Follow-up and reservices included','Price varies by infestation severity'], note:'Price confirmed at inspection based on severity and home size.' },
+  flea:          { name:'FLEA', sub:'TREATMENT', price:'$350', isRange:false, features:['2 treatments 7–14 days apart','Interior and exterior treatment','Pet-safe application protocol','30-day guarantee'], note:'Vacuum thoroughly and wash all pet bedding before each treatment.' },
+  mosquito_trap: { name:'MOSQUITO', sub:'TRAP SERVICE', price:'$20/month', isRange:false, isMonthly:true, features:['2 traps installed on your property','Monthly trap refill and maintenance','Up to 80% mosquito reduction','No long-term contract required'], note:'Best for properties near water. Month-to-month — cancel anytime.' },
+  moles:         { name:'MOLES & VOLES', sub:'TREATMENT', price:'$450', isRange:false, features:['3 consecutive daily treatments','Granular bait and live trap combo','15-day guarantee','Yard assessment included'], note:'Follow-up available if activity persists after treatment.' },
+  bedbug:        { name:'BED BUG', sub:'TREATMENT', price:'$3,000–$3,500', isRange:true, features:['4–5 treatments total','Heat and chemical combination','30-day guarantee','Full home assessment included'], note:'All bedding and clothing must be laundered before each treatment.' },
+  yellowjacket:  { name:'YELLOW JACKET', sub:'TREATMENT', price:'$450', isRange:false, features:['1 treatment','Nest location and removal','Aerial and ground nests covered','Same-day results in most cases'], note:'Exterior treatment only. Active nests treated directly.' },
+  termite:       { name:'TERMITE', sub:'TREATMENT', price:'$1,600–$2,700', isRange:true, features:['1-day installation with 6-month inspections','Retreatment guarantee included','1-year renewal plan','Interior inspection required'], note:'Price varies by linear footage of structure.' },
+  rodent:        { name:'RODENT', sub:'BOX SERVICE', price:'$60', isRange:false, features:['External rodent box placement','Out-of-sight, out-of-reach trap methods','Follow-up inspection in 4–5 days','Exclusion recommendations provided'], note:'Outside placement only.' },
+  bees:          { name:'BEE', sub:'TREATMENT', price:'$2,500', isRange:false, features:['1 full treatment','Full hive and colony removal','Florida law requires 3 beekeeper relocation denials first','We handle the verification process for you'], note:'By Florida law, relocation must be attempted before extermination.' },
+};
+
+function renderOneTimeResult() {
+  const key = answers.oneTimeService;
+  const d = ONE_TIME_DATA[key];
+  if (!d) return;
+  document.getElementById('ot-name').innerHTML = d.name + ' <span>' + d.sub + '</span>';
+  document.getElementById('ot-note').textContent = d.note;
+  document.getElementById('ot-price').textContent = d.price;
+  document.getElementById('ot-discount-badge').style.display = 'none';
+  const ul = document.getElementById('ot-features');
+  ul.innerHTML = '';
+  d.features.forEach(f => { const li = document.createElement('li'); li.textContent = f; ul.appendChild(li); });
+}
+
+// ─── FORM VALIDATION ──────────────────────────────────────────────────────────
+function formatPhone(el) {
+  const v = el.value.replace(/\D/g, '').substring(0, 10);
+  if (v.length > 6)      el.value = '(' + v.substring(0,3) + ') ' + v.substring(3,6) + '-' + v.substring(6);
+  else if (v.length > 3) el.value = '(' + v.substring(0,3) + ') ' + v.substring(3);
+  else if (v.length > 0) el.value = '(' + v;
+  else el.value = '';
+}
+
+// Common email typo domains
+const EMAIL_TYPO_DOMAINS = ['gmial.com','gmai.com','gmial.co','gmaill.com','gnail.com','gmal.com',
+  'yhoo.com','yaho.com','yahooo.com','yahoo.co','ymail.co',
+  'hotmial.com','hotmal.com','hotmai.com','hotnail.com',
+  'outlok.com','outloo.com','outlook.co','outlock.com',
+  'aol.co','aoll.com','iclod.com','icloud.co'];
+
+function isValidEmail(v) {
+  v = v.trim().toLowerCase();
+  // Basic shape: letters/numbers/dots/etc @ domain . tld(2+)
+  if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(v)) return false;
+  // Block typo domains
+  const domain = v.split('@')[1];
+  if (EMAIL_TYPO_DOMAINS.includes(domain)) return false;
+  return true;
+}
+
+function isValidPhone(v) {
+  const digits = v.replace(/\D/g, '');
+  if (digits.length !== 10) return false;
+  // Area code can't start with 0 or 1
+  if (digits[0] === '0' || digits[0] === '1') return false;
+  // Exchange (4th digit) can't start with 0 or 1
+  if (digits[3] === '0' || digits[3] === '1') return false;
+  // Block all-same-digit (1111111111, 9999999999, etc)
+  if (/^(\d)\1{9}$/.test(digits)) return false;
+  // Block obvious fakes
+  if (digits === '1234567890' || digits === '0123456789') return false;
+  return true;
+}
+
+function isValidName(v) {
+  v = v.trim();
+  if (v.length < 2) return false;
+  // Must contain at least one letter
+  if (!/[a-zA-Z]/.test(v)) return false;
+  // Block all-same-character ("aaaa", "....")
+  if (/^(.)\1+$/.test(v)) return false;
+  // Block known gibberish patterns
+  if (/^(asdf|qwer|test|none|null|na|n\/a)$/i.test(v)) return false;
+  return true;
+}
+
+function isValidStreet(v) {
+  v = v.trim();
+  if (v.length < 4) return false;
+  // Must start with a number (street address)
+  if (!/^\d/.test(v)) return false;
+  // Must have at least one letter after the number
+  if (!/[a-zA-Z]/.test(v)) return false;
+  return true;
+}
+
+// Florida ZIP ranges are roughly 32000-34999
+function isFloridaZip(zip) {
+  const n = parseInt(zip, 10);
+  return n >= 32000 && n <= 34999;
+}
+
+// Generic validator runner: validates a field, shows/hides error, returns true if valid
+function validateField(elId, errId, validatorFn) {
+  const el = document.getElementById(elId);
+  const err = document.getElementById(errId);
+  const val = el.value.trim();
+  if (!val || !validatorFn(val)) {
+    el.classList.add('error');
+    if (err) err.classList.add('show');
+    // Clear error on user input
+    const clear = () => { el.classList.remove('error'); if (err) err.classList.remove('show'); };
+    el.addEventListener('input', clear, { once: true });
+    return false;
+  }
+  el.classList.remove('error');
+  if (err) err.classList.remove('show');
+  return true;
+}
+
+function validateLeadStep1() {
+  // Clear all error states first
+  ['err-fname','err-lname','err-email','err-phone'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('show');
+  });
+  let valid = true;
+  if (!validateField('inp-fname', 'err-fname', isValidName)) valid = false;
+  if (!validateField('inp-lname', 'err-lname', isValidName)) valid = false;
+  if (!validateField('inp-email', 'err-email', isValidEmail)) valid = false;
+  if (!validateField('inp-phone', 'err-phone', isValidPhone)) valid = false;
+  if (!valid) return;
+  goToFStep(2);
+}
+
+function highlightEmpty(ids) {
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el || el.value.trim()) return;
+    el.classList.add('error');
+    el.addEventListener('input', () => el.classList.remove('error'), { once: true });
+  });
+}
+
+// ─── LEAD SUBMISSION ─────────────────────────────────────────────────────────
+async function submitLead() {
+  // Clear all error states
+  ['err-street','err-zip','warn-zip'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('show');
+  });
+
+  let valid = true;
+  // Street: must start with a digit and have a letter
+  if (!validateField('inp-street', 'err-street', isValidStreet)) valid = false;
+  // City: just non-empty + at least 2 chars
+  if (!validateField('inp-city', null, v => v.trim().length >= 2)) valid = false;
+  // State: 2 letters
+  if (!validateField('inp-state', null, v => /^[A-Za-z]{2}$/.test(v.trim()))) valid = false;
+  // ZIP: 5 digits
+  if (!validateField('inp-zip', 'err-zip', v => /^\d{5}$/.test(v.trim()))) valid = false;
+  if (!valid) return;
+
+  const zipEl = document.getElementById('inp-zip');
+  const zip   = zipEl.value.trim();
+
+  // FL ZIP soft warning — once. If they submit again, accept it.
+  const warnEl = document.getElementById('warn-zip');
+  if (!isFloridaZip(zip) && !warnEl.dataset.acknowledged) {
+    warnEl.classList.add('show');
+    warnEl.dataset.acknowledged = '1';
+    return;
+  }
+
+  const btn = document.getElementById('btn-submit-lead');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  const fname    = document.getElementById('inp-fname').value.trim();
+  const lname    = document.getElementById('inp-lname').value.trim();
+  const email    = document.getElementById('inp-email').value.trim();
+  const phone    = document.getElementById('inp-phone').value.trim();
+  const besttime = document.getElementById('inp-besttime').value || 'Not specified';
+  const street   = document.getElementById('inp-street').value.trim();
+  const city     = document.getElementById('inp-city').value.trim();
+  const state    = document.getElementById('inp-state').value.trim().toUpperCase();
+  const needsEl  = document.getElementById('inp-needs');
+  const needs    = (needsEl && needsEl.value.trim()) || '';
+
+  const payload = {
+    submitted:     new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+    name:          fname + ' ' + lname,
+    email,
+    phone,
+    best_time:     besttime,
+    address:       street + ', ' + city + ', ' + state + ' ' + zip,
+    service_type:  SVCTYPE_LABELS[answers.serviceType] || '—',
+    one_time_svc:  answers.oneTimeService ? (OT_LABELS[answers.oneTimeService] || answers.oneTimeService) : '—',
+    pests:         labelArr(answers.q2, PEST_LABELS),
+    pets:          labelArr(answers.q3, PET_LABELS),
+    urgency:       URGENCY_LABELS[answers.q5] || '—',
+    priorities:    labelArr(answers.q6, PRIORITY_LABELS),
+    home_size:     HOME_LABELS[answers.q7] || '—',
+    yard_size:     YARD_LABELS[answers.q8] || '—',
+    discounts:     labelArr(answers.discounts, DISCOUNT_LABELS),
+    property_type: answers.q1 === 'home' ? 'Single-Family Home' : answers.q1 === 'condo' ? 'Townhouse/Condo' : answers.q1 === 'commercial' ? 'Commercial/Rental' : '—',
+    direct_needs:  needs,
+    source:        directMode ? 'Direct Link' : 'Web Quiz'
+  };
+
+  try {
+    if (WEBHOOK_URL && WEBHOOK_URL !== 'YOUR_WEBHOOK_URL_HERE') {
+      // no-cors: required for Google Apps Script / Make.com webhooks called from a browser.
+      // The response is opaque (unreadable) but the data is delivered.
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      });
+    }
+    showThankYou(payload);
+  } catch (err) {
+    console.error('Webhook fetch failed, trying sendBeacon:', err);
+    // Last-resort delivery attempt that survives page transitions
+    try {
+      if (WEBHOOK_URL && WEBHOOK_URL !== 'YOUR_WEBHOOK_URL_HERE' && navigator.sendBeacon) {
+        navigator.sendBeacon(WEBHOOK_URL, new Blob([JSON.stringify(payload)], { type: 'text/plain;charset=utf-8' }));
+      }
+    } catch (e2) { console.error('sendBeacon failed:', e2); }
+    showThankYou(payload);
+  }
+}
+
+function showThankYou(payload) {
+  const rows = [
+    ['Name',          payload.name],
+    ['Phone',         payload.phone],
+    ['Email',         payload.email],
+    ['Address',       payload.address],
+    ['Best Visit Time', payload.best_time],
+  ];
+  // Direct mode: show their stated need at the top (right after contact info)
+  if (directMode && payload.direct_needs) {
+    rows.push(['Need',         payload.direct_needs]);
+  } else {
+    // Quiz mode: show service context
+    rows.push(['Service Type',  payload.service_type]);
+    rows.push(['Pests',         payload.pests]);
+    rows.push(['Urgency',       payload.urgency]);
+    rows.push(['Home Size',     payload.home_size]);
+    if (payload.one_time_svc !== '—') rows.splice(6, 0, ['Service Selected', payload.one_time_svc]);
+    if (payload.discounts && payload.discounts !== 'None' && payload.discounts !== '—') rows.push(['Discount', payload.discounts]);
+  }
+
+  const summary = document.getElementById('ty-summary');
+  summary.innerHTML = '<div class="ty-summary-title">📋 Your Submission</div>' +
+    rows.map(([label, val]) =>
+      `<div class="ty-row"><span class="ty-label">${label}</span><span class="ty-val">${val}</span></div>`
+    ).join('');
+
+  // Update the reset button label based on mode
+  const resetBtn = document.querySelector('#screen-thankyou .btn-retake');
+  if (resetBtn) {
+    resetBtn.textContent = directMode ? 'Submit Another Lead' : 'Start a New Assessment';
+  }
+
+  showScreen('screen-thankyou');
+}
+
+// ─── ACCESSIBILITY INIT ──────────────────────────────────────────────────────
+// Make option cards keyboard-navigable (Tab to focus, Enter/Space to select)
+document.querySelectorAll('.option').forEach(opt => {
+  opt.setAttribute('tabindex', '0');
+  opt.setAttribute('role', 'button');
+  opt.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      opt.click();
+    }
+  });
+});
+
+// Check for ?direct=1 URL parameter and jump straight to lead form if found
+initDirectMode();
+</script>
+</body>
+</html>
